@@ -125,15 +125,12 @@ export default {
     },
     getTime: function (d) {
       let date = new Date(d);
-      //get time in date
       let time = date.getMinutes();
       let hour = date.getHours();
       return `${hour}:${time > 10 ? time : "0" + time}`;
     },
     getDate: function (d) {
       let date = new Date(d);
-
-      //get time in date
       let m = date.toLocaleString("en", { month: "short" });
       let day = date.getDate();
       return `${day} ${m}`;
@@ -158,8 +155,8 @@ export default {
       .catch((error) => {
         console.log(error);
       });
-      let { protocol} = location;
-    let connection = new WebSocket(`${protocol=== 'https' ? `wss` : 'ws' }://${this.$http.defaults.baseURL}/wall/socket`);
+    let { protocol } = location;
+    let connection = new WebSocket(`${protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/api/wall/socket`);
     this.connection = connection;
 
     connection.onopen = () => {
