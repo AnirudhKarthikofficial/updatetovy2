@@ -28,12 +28,14 @@ Vue.component('main-layout', main)
 Vue.component('default-layout', def)
 const store = new Vuex.Store({
   state: {
-    user: {
-      id: null,
-      name: null,
-      signedin: false,
-      '2fa':  false,
-    }, group: {
+user: {
+  id: null,
+  name: null,
+  signedin: false,
+  '2fa':  false,
+  perms: [],
+},
+    group: {
       color: 'red',
       id: null
     }
