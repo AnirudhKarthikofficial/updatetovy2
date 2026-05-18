@@ -12,7 +12,6 @@
     </component>
   </v-app>
 </template>
-
 <script>
 export default {
   name: "App",
@@ -31,7 +30,6 @@ export default {
      if (this.$route.path.includes('/invite/')) {
       this.invite = this.$route.params.code
     }
-
     this.$http
       .get("/profile", { withCredentials: true })
       .catch(error => {
@@ -43,24 +41,20 @@ export default {
         setTimeout(() => {
           this.loading = false;
         }, 300);
-
  
         if (error.response.status === 401) {
           if (this.$route.path == "/login" || this.$route.path == '/signup') return;
           this.$router.push(`/login${this.invite ? `?invite=${this.invite}` : ''}`);
         }
-
         if (error.response.status === 404) {
           this.loading = false;
           if (this.$route.path == "/error") return;
           this.$router.push("/error");
         }
-
         if (error.response.status === 403) {
           if (this.$route.path == "/forbidden") return;
           this.$router.push(`/forbidden${this.invite ? `?invite=${this.invite}` : ''}`);
         }
-
         if (error.response.status === 400) {
           if (this.$route.path == "/welcome") return;
           this.$router.push("/welcome");
@@ -73,7 +67,6 @@ export default {
           this.$router.push("/");
         }
         console.log('uuw')
-
         if (this.invite) {
           this.$router.push(`/forbidden${this.invite ? `?invite=${this.invite}` : ''}`);
         }
@@ -81,14 +74,15 @@ export default {
         if (this.$route.path == "/welcome") {
           this.$router.push("/");
         }
-       if (response.data.info) {
-  response.data.info.pfp = response.data.pfp;
-  this.$store.commit("setuser", response.data.info);
-}
-        this.$store.commit("netntext", response.data.group.noticetext);
-        this.$store.commit("setgroup", response.data.group);
+        if (response.data.info) {
+          response.data.info.pfp = response.data.pfp;
+          this.$store.commit("setuser", response.data.info);
+        }
+        if (response.data.group) {
+          this.$store.commit("netntext", response.data.group.noticetext);
+          this.$store.commit("setgroup", response.data.group);
+        }
         this.$store.commit("set2fa", response.data['2fa']);
-
         setTimeout(() => {
           this.loading = false;
         }, 300);
