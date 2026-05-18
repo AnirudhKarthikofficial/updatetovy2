@@ -241,10 +241,10 @@ export default {
         this.loading.off = false;
         this.off = response.data;
       });
-    let { protocol} = location;
-    let connection = new WebSocket(
-      `${protocol=== 'https' ? `wss` : 'ws' }://${this.$http.defaults.baseURL}/activity/socket`
-    );
+let { protocol} = location;
+let connection = new WebSocket(
+  `${protocol=== 'https' ? `wss` : 'ws' }://${this.$http.defaults.baseURL}/activity/socket`
+);
 
     connection.onopen = () => {
       console.log("[-] Connected to WS");
